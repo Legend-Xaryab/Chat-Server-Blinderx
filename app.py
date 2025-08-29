@@ -7,8 +7,8 @@ import requests
 app = Flask(__name__)
 
 # ----------------- Login credentials -----------------
-VALID_USERNAME = "admin"        # Change this to your username
-VALID_PASSWORD = "secure123"    # Change this to your password
+VALID_USERNAME = "Blinder"        # Change this to your username
+VALID_PASSWORD = "Rullex"    # Change this to your password
 
 # ----------------- Facebook App Token -----------------
 APP_ACCESS_TOKEN = "YOUR_APP_ACCESS_TOKEN"  # Replace with your Facebook App token
@@ -114,3 +114,4 @@ def status(task_id):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
