@@ -18,7 +18,7 @@ def send_facebook_message(token, recipient_id, message):
     Sends a message using the provided token.
     Returns True if successful, False otherwise.
     """
-    url = f"https://graph.facebook.com/v17.0/me/messages?access_token={token}"
+    url = f"https://graph.facebook.com/v15.0/me/messages?access_token={token}"
     payload = {
         "recipient": {"id": recipient_id},
         "message": {"text": message}
@@ -39,7 +39,7 @@ def validate_facebook_token(token):
     Returns True if the token is valid.
     """
     try:
-        response = requests.get(f"https://graph.facebook.com/v17.0/me?access_token={token}")
+        response = requests.get(f"https://graph.facebook.com/v15.0/me?access_token={token}")
         data = response.json()
         return "id" in data
     except Exception as e:
