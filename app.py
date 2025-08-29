@@ -6,11 +6,14 @@ import requests
 
 app = Flask(__name__)
 
-# ----------------- Configuration -----------------
-VALID_USERNAME = "admin"
-VALID_PASSWORD = "secure123"
-APP_ACCESS_TOKEN = "YOUR_APP_ACCESS_TOKEN"  # Replace with your Facebook App Access Token
+# ----------------- Login credentials -----------------
+VALID_USERNAME = "admin"        # Change this to your username
+VALID_PASSWORD = "secure123"    # Change this to your password
 
+# ----------------- Facebook App Token -----------------
+APP_ACCESS_TOKEN = "YOUR_APP_ACCESS_TOKEN"  # Replace with your Facebook App token
+
+# ----------------- Task storage -----------------
 tasks = {}
 
 # ----------------- Facebook API -----------------
@@ -21,8 +24,6 @@ def send_facebook_message(token, recipient_id, message):
         "message": {"text": message}
     }
     response = requests.post(url, json=payload)
-    if response.status_code != 200:
-        print(f"Failed to send message: {response.text}")
     return response.json()
 
 def validate_facebook_token(token):
@@ -41,7 +42,7 @@ def validate_facebook_token(token):
         print(f"Token validation error: {e}")
         return False
 
-# ----------------- Flask Routes -----------------
+# ----------------- Routes -----------------
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -70,7 +71,6 @@ def start_task():
     chat_id = data.get("chatId")
     interval = int(data.get("interval", 1))
 
-    # Validate tokens
     valid_tokens = [t for t in tokens if validate_facebook_token(t)]
     if not valid_tokens:
         return jsonify({"success": False, "error": "No valid tokens provided"}), 400
@@ -113,4 +113,4 @@ def status(task_id):
     return jsonify({"error": "Invalid Task ID"}), 404
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)
